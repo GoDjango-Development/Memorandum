@@ -1,0 +1,39 @@
+{% extends 'memorandum/base.html' %}
+{% load static %}
+    {% block body %}
+    <div class="container-fluid d-flex flex-column min-vh-100">
+        <div class="card-head bg-primary text-white">
+            {% block titulo %}
+          
+            {% endblock %}
+
+        </div>
+
+        <form  class="for form-control form-row" method="post">
+            
+            <div class="card-body">
+                {% csrf_token %}
+
+                {% block forms %}
+
+                {% endblock %}
+
+
+            </div>
+            {% block btn%}
+            <div class="card-footer">
+                {% block buttons %}
+                    <input type="submit" class="btn btn-primary" value="Registrar">
+                {% endblock %}
+
+                
+                <a href="{% url 'list_memorandums' %}" class="btn btn-danger">Cancelar</a>
+                
+            </div>
+            {%endblock%}
+        </form>
+    </div>
+    
+{% endblock %}
+
+    

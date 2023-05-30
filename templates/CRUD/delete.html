@@ -1,0 +1,67 @@
+{% extends 'memorandum/base.html' %}
+<head>
+    {% load static %}
+    {%block head%}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Memorandums Blog</title>
+	
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+  
+    <script language="javascript" type="text/javascript">
+     window.onload=function(){
+        document.forms["eliminar"].submit();
+     }
+        
+    </script>
+
+   
+<!--
+    
+TemplateMo 553 Xtra Blog
+
+https://templatemo.com/tm-553-xtra-blog
+
+-->
+    {%endblock%}
+</head>
+
+
+{% block body %}
+
+<div   style="display:none;">
+    <div class="card">
+        <div class="card card-header bg-primary text-white">
+            <h3 class="card-title "></h3>
+        </div>
+        <form name="eliminar" class="for form-control form-row" method="post">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <strong>Cuidado!</strong>
+                    <br>
+                    Estas seguro de eliminar el memorandum {{ object.nombre }}
+                    <br>
+                    
+                </div>
+
+
+            </div>
+            {%block dcancel%}
+            <div class="card-footer bg-white">
+                <input type="submit" class="btn btn-warning" value="Eliminar">
+                <a href="{% url 'list_memorandums' %}" class="btn btn-danger">Cancelar</a>
+
+            </div>
+            {%endblock%}
+        </form>
+
+
+    </div>
+  
+</div>
+
+{% endblock %}
+
+

@@ -1,0 +1,105 @@
+{% extends 'memorandum/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="content-wrapper">
+
+<div style="margin:auto; text-align: center;" class="card bg-info text-white form-group col-md-8 container-fluid" >
+    <h3 class="card-body">Invitar Lector(es)</h3>
+</div>
+
+
+<div  class=" container-fluid ">
+ 
+    <div class="row">
+
+           <form method='POST' class="form-group col-md-8 container-fluid" action="{% url 'invitar' %}" >
+            {% csrf_token %}
+            
+            <label for="nombre">Nombre del Memorandum</label>
+
+            <select class="form-control" name="nombre" id="nombre">
+               
+              <option value="{{nombre}}">
+                {{nombre}}
+              </option>
+              
+            </select> 
+            <label for="email">Seleccionar Invitado(s)</label>
+
+            <select class="form-control" name="email" id="email" multiple>
+              {% for em in usuarios %}  
+              <option value="{{em.email}}">
+                {{em.email}}
+              </option>
+              {% endfor %}
+            </select> 
+            <a href="{% url 'list_memorandums' %}" class="btn btn-danger text-center" >Cancelar</a>
+            <button type="submit" class="btn btn-info text-center">Enviar</button>
+           </form>
+       
+           <div class="col-md-6 container-fluid">
+         
+            <!-- /.card -->
+            
+            {% if ids %}
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Invitados</h3>
+  
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    
+                </div>
+              </div>
+             <div class="card-body p-0">
+                <table class="table">
+                    <thead>
+                      <tr>
+                    <td>Usuario</td>
+                    <td>Acciones</td>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+    
+                      
+                        {% for d in ids %}
+                        <tr>
+                            <td>{{ d.destinatario }}</td>
+                            
+                           
+                            <td>                
+                                {% if perms.memorandum.delete_destinatarios %}        
+                                <a href="{% url 'delete_invitados' d.id %}" id="eliminar" title="Eliminar" class="btn btn-danger"><i class='fas fa-trash-alt'></i></a>
+                                {% endif %}                        
+                                 
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            {% else %}
+            <div class="alert alert-danger">
+                
+                <br>
+                Este Memorandum no tiene invitados.
+                <br>
+                
+            </div>
+            {% endif %}
+  
+          </div>
+         
+        </div>
+
+        
+  
+</div>
+
+</div>
+{% endblock %}

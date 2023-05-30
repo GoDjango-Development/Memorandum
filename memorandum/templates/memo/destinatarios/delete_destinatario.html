@@ -1,0 +1,40 @@
+{% extends 'CRUD/delete.html' %}
+
+{% block body %}
+
+<div style="display:none;">
+    <div class="card">
+        <div class="card card-header bg-primary text-white">
+            <h3 class="card-title "></h3>
+        </div>
+        <form name="eliminar" class="for form-control form-row" method="post">
+            {% csrf_token %}
+
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <strong>Cuidado!</strong>
+                    <br>
+                    Estas seguro de eliminar el destinatario
+                    <br>
+                    
+                </div>
+
+
+            </div>
+            {%block dcancel%}
+            <div class="card-footer bg-white">
+                <input type="submit" class="btn btn-warning" value="Eliminar">
+                <a href="{% url 'list_memorandums' %}" class="btn btn-danger">Cancelar</a>
+
+            </div>
+            {%endblock%}
+        </form>
+
+
+    </div>
+  
+</div>
+
+{% endblock %}
+
+

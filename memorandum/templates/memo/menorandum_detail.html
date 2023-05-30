@@ -1,0 +1,75 @@
+{% extends 'memorandum/base.html' %}
+{% load static %}
+
+
+ 
+
+{% block body %}
+  
+    {% if invitado or request.user.username == menorandum.user.username %}
+       
+          
+                    {%if expiro %} 
+                        {% include "memo/404.html" %}
+                    {% else %}
+                    <div class="content-wrapper">
+                    <main id="main" class="tm-main ">
+                    
+                    {% if request.user.username == menorandum.user.username %} 
+                    <div class="card-footer container-fluid row tm-row">
+                        <div class="col-12">
+                                <a href="{% url 'invitar_lector'  menorandum.nombre %}" class="btn btn-info" >
+                                   Invitar Lector
+                                </a>                                
+                                  
+                        </div>                
+                    </div> 
+                    {% endif %}         
+               
+                    <div class="row tm-row text-center">
+                        <div class="col-lg-12 tm-post-col">
+                            <div class="tm-post-full">                    
+                                <div class="mb-4">
+                                    <h2 class="pt-2 tm-color-primary tm-post-title">{{menorandum.nombre}}</h2>
+                                    <p class="tm-mb-40"></p>
+                                    <p>{{menorandum.texto|safe|striptags|truncatechars:500}}</p>
+                                    
+                                </div>
+                                <div class="mb-4">
+                                    <hr class="col-12">
+                                    <h5 class="pt-2 tm-color-primary tm-post-title">Listado de Archivos Asociados</h5>
+                                    <p class="tm-mb-40"></p>
+                                    {% if menorandum.archivos %}
+                                    {% for arch in menorandum.archivos.all %}
+                                    <a href="{{arch.archivos.url}}">
+                                        {{arch.archivos.name}}<br>
+                                    </a>
+                                    {% endfor %} 
+                                    {% else %}
+                                    <p>Este memorandum no tiene archivos asociados</p>
+                                    {% endif %}       
+                                    <span class="d-block text-center tm-color-primary">Escrito por: {{menorandum.user.username}}</span>
+                                </div>                         
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </main>    
+                </div> 
+                {% endif %}
+            
+            
+         
+    {% else %}
+    <p class="text-center alert alert-danger">No estas invitado a ver este Memorandum</p>        
+    {% endif %}               
+                
+                       
+           
+{% endblock %}
+        
+        
+    

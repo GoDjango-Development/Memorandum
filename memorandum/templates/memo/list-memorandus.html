@@ -1,0 +1,167 @@
+{% extends 'CRUD/list.html' %}
+<head>
+    {% load static %}
+    {%block head%}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Memorandums Blog</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+   
+   
+    <script language="javascript" type="text/javascript">
+        $(document).ready(ini);
+           function ini () {
+                $("a#eliminar").click(Eliminar);
+                
+            }   
+            
+            function Eliminar(){
+                if(confirm("¿Estas seguro de eliminar este memorandum?")){
+                     alert("Se ha eliminado el Memorandum de forma satisfactoria");                   
+                }
+                else{
+                    $("a#eliminar").prop('href','#');
+                    location.reload();
+                }
+                
+            }
+        
+        </script>
+
+   
+<!--
+    
+TemplateMo 553 Xtra Blog
+
+https://templatemo.com/tm-553-xtra-blog
+
+-->
+    {%endblock%}
+</head>
+{% block content %}
+
+    
+    <!-- You can alternatively load the minified version -->
+
+
+
+<div   class="container-fluid">
+{%block list%}
+<div style="margin:auto; text-align: center;" class="card bg-info text-white" >
+    <h3 class="card-body">Listado de Memorandums</h3>
+</div>
+{%endblock%}
+</div>
+<div  class="container-fluid ">
+ 
+    <div class="row">
+
+        {%block bot%}
+
+        <div class="card-footer bg-light"> 
+            {% if perms.memorandum.add_menorandum %}                     
+            <a href="{% url 'add_memorandums' %}" title="Adicionar" class="btn btn-info"><i class='fas fa-plus'></i>Adicionar un Memorandum</a>
+            {% endif %}
+        </div>
+
+        {%endblock%}
+        
+
+        <div class="card-body">
+            <table  class="table">
+                {% block thead %}
+                <thead style="margin-left:40px;">
+                    <td>Nombre</td>
+                    <td>Creado</td>
+                    <td>Acciones</td>
+                    
+                </thead>
+                {% endblock %}
+
+                {% block tbody %}
+                <tbody>
+                    {% if page_obj %}
+                    {% for m in page_obj.object_list %}
+                        <tr>
+                            <td>{{ m.nombre }}</td>
+                            <td>{{ m.created_at }}</td>
+                           
+                            <td>
+                                {% if perms.memorandum.change_menorandum %}                                                             
+                                <a href="{% url 'update_memorandums' m.id %}" title="Actualizar"class="btn  btn-success"><i class='fas fa-edit'></i></a>
+                                {% endif %}
+                                {% if perms.memorandum.delete_menorandum %}
+                                <a href="{% url 'delete_memorandums' m.id %}" id="eliminar" title="Eliminar" class="btn btn-danger"><i class='fas fa-trash-alt'></i></a>
+                                {% endif %}
+                                <a href="{% url 'detail_memorandums' m.user.username m.id %}" title="Ver" class="btn btn-info"><i class='fas fa-eye'></i></a>
+                                
+                                
+                                 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <div style="text-align: center;">
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; primera</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                            {% endif %}
+                            
+                            <span class="current">
+                                Página {{ page_obj.number }} de{{ page_obj.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                    </div>
+            
+            
+                    {% else %}
+                    <tr>
+                        <td> No hay datos a Mostrar</td>
+                    </tr>
+                    {% endif %}
+            
+                </tbody>
+                {% endblock %}
+            </table>    
+        </div>
+        
+    </div>
+ 
+</div>
+    
+
+
+
+
+{% endblock %}
+

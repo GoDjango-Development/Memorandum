@@ -1,0 +1,36 @@
+{% extends 'CRUD/update.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+
+
+{% block body %}
+
+<div class="content-wrapper" >
+    <div class="card-header bg-info text-white">
+        {% block titulo %}
+            <h3 class="card-title" style="text-align:center;">Actualizar Archivo</h3>
+        {% endblock %}
+    </div>
+    
+            <form style="for form-control form-row" enctype="multipart/form-data" method="post" >
+                {% csrf_token %}
+                <div class="card-body">
+                    
+                    {% block forms %}
+                    {{ form|crispy|safe }}
+                    {% endblock %}
+    
+    
+                </div>
+                {%block upd%}
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-info" value="Actualizar">
+                        <a href="{% url 'list_memorandums' %}" class="btn btn-danger" >Cancelar</a>
+        
+                    </div>
+                {%endblock%}
+            </form>    
+</div>
+{%endblock%}
+

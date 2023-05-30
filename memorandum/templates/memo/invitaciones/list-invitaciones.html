@@ -1,0 +1,74 @@
+{% extends 'CRUD/list.html' %}
+{% load static %}
+
+{% block content %}
+
+    
+    <!-- You can alternatively load the minified version -->
+
+
+
+<div   class="container-fluid">
+{%block list%}
+<div style="margin:auto; text-align: center;" class="card bg-info text-white" >
+    <h3 class="card-body">Listado de Invitaciones</h3>
+</div>
+{%endblock%}
+</div>
+<div  class="container-fluid ">
+ 
+    <div class="row">
+
+        {%block bot%}
+
+        
+
+        {%endblock%}
+        {%block buscar%}
+
+        {%endblock%}
+        
+
+        <div class="card-body">
+            <table  class="table">
+                {% block thead %}
+                <thead style="margin-left:40px;">
+                    <td>Link de Invitacion</td>
+                    <td>Remitente</td>                                       
+                </thead>
+                {% endblock %}
+
+                {% block tbody %}
+                <tbody>
+                    {% if invitacion %}
+                    {% for i in invitacion %}
+                        <tr>
+                            <td>{{i.slug}}</td>
+                            <td>{{ i.remitente }}</td>          
+                        
+                        </tr>
+                    {% endfor %}
+                    
+            
+            
+                    {% else %}
+                    <tr>
+                        <td> No Tienes Invitaciones</td>
+                    </tr>
+                    {% endif %}
+            
+                </tbody>
+                {% endblock %}
+            </table>    
+        </div>
+        
+    </div>
+ 
+</div>
+    
+
+
+
+
+{% endblock %}
+
