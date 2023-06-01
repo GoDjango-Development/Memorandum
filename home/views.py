@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import Group
 from django.views.generic import RedirectView,View
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib import messages 
@@ -18,7 +19,9 @@ User=get_user_model()
 
 def loguear(request):
     if request.user.is_authenticated:
-                return redirect('Home')
+        
+        return redirect('Home')
+              
     if request.method=="POST":
         form=AuthenticationForm(request,data=request.POST)
         if form.is_valid():
@@ -52,7 +55,10 @@ class Salir(RedirectView):
     
 @login_required
 def home(request):
-    empresa = Empresa.objects.first()    
+    empresa = Empresa.objects.first() 
+    Memorandum=Group.objects.filter(name="Memorandum").first()
+    print(Memorandum)
+    request.user.groups.add(Memorandum)   
     return render(request, "memorandum/base.html",{'empresa':empresa})
 @login_required
 def contacto(request):
