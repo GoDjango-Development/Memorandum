@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group,Permission
 from django.views.generic import RedirectView,View
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib import messages 
@@ -56,10 +56,37 @@ class Salir(RedirectView):
 @login_required
 def home(request):
     empresa = Empresa.objects.first() 
-    Memorandum=Group.objects.filter(name="Memorandum").first()
-    print(Memorandum)
-    request.user.groups.add(Memorandum)   
+    user=User.objects.filter(username=request.user.username).first()
+    
+    Memorandum=Group.objects.filter(name="Memorandum").first() 
+    Archivo=Group.objects.filter(name="Archivo").first()
+    Destinatario=Group.objects.filter(name="Destinatario").first()
+    Invitacion=Group.objects.filter(name="Invitacion").first()
+    if Memorandum is not None and Archivo is not None and Destinatario is not None and Invitacion is not None:
+        user.groups.add(Memorandum,Archivo,Destinatario,Invitacion)
+        
+    else:
+        Memorandum=Group.objects.create(name="Memorandum")
+        Archivo=Group.objects.create(name="Archivo")
+        Destinatario=Group.objects.create(name="Destinatario")
+        Invitacion=Group.objects.create(name="Invitacion")
+        
+        m=Permission.objects.filter(name__icontains="Memorandum")
+        archivos=Permission.objects.filter(name__icontains="Archivos")
+        destinatarios=Permission.objects.filter(name__icontains="Destinatario")
+        invitacion=Permission.objects.filter(name__icontains="Invitacion")
+        
+        for p in m:
+            Memorandum.permissions.add(p)
+        for a in archivos:
+            Archivo.permissions.add(a)
+        for d in destinatarios:
+            Destinatario.permissions.add(d)
+        for i in invitacion:
+            Invitacion.permissions.add(i)            
+        user.groups.add(Memorandum,Archivo,Destinatario,Invitacion)     
     return render(request, "memorandum/base.html",{'empresa':empresa})
+
 @login_required
 def contacto(request):
     empresa = Empresa.objects.first()
