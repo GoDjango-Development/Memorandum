@@ -22,7 +22,7 @@ User=get_user_model()
 def memorandus(request):
     if request.user.is_authenticated:  
         empresa = Empresa.objects.first()
-        memo = Menorandum.objects.filter(user=request.user).order_by('created_at')
+        memo = Menorandum.objects.filter(user=request.user).order_by('-created_at')
         filter=MemoFilter(request.GET,queryset=memo)
         memo=filter.qs       
         paginator = Paginator(memo, 10)
@@ -74,6 +74,26 @@ def add_memorandus(request):
             return render(request, 'memo/add-memorandum.html', {
             'error': 'El formulario no es valido','empresa':empresa
             })
+
+def add_arch_memo(request,pk):
+    if request.method=='GET' and request.user.is_authenticated:
+            empresa = Empresa.objects.first()
+            return render(request, 'memo/archivos/update-archivos.html', {'form': ArchivosForm(),'empresa':empresa})
+        
+    if request.method=='POST' and request.user.is_authenticated :  
+        form = ArchivosForm(request.POST, request.FILES)
+        if form.is_valid():      
+            m=Menorandum.objects.filter(id=pk).first()
+            if request.FILES.getlist('archivos') != '':    
+                for f in request.FILES.getlist('archivos'):
+                    file_instance=Archivos(user=request.user,archivos=f,memo=m.nombre)
+                    file_instance.save()
+                    m.archivos.add(file_instance) 
+        return redirect('list_memorandums')
+        
+        
+    
+                
             
 def memo_arch(request,nombre):
     ma=Archivos.objects.filter(memo=nombre)

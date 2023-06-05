@@ -1,5 +1,7 @@
 {% extends 'memorandum/base.html' %}
 {% load static %}
+{% block nav %}
+{% endblock %}
 {% block body%}
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -13,7 +15,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>404 Error </h1>
+            <h1>Memorandum Error</h1>
           </div>
           <div class="col-sm-6">
          
@@ -25,14 +27,13 @@
     <!-- Main content -->
     <section class="content">
       <div class="error-page">
-        <h2 class="headline text-warning"> 404</h2>
+        <h3 class="headline text-warning">Memorandum Expirado</h3>
 
         <div class="error-content">
           <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Página no encontrada.</h3>
 
           <p>
-            No se ha podido encontrar este Memorandum, probablemente halla expirado la fecha de validéz
-            
+            No se ha podido encontrar este Memorandum, probablemente halla expirado la fecha de validéz            
           </p>
 
        
@@ -47,4 +48,5 @@
 </div>
 </body> 
 {% endblock %} 
-
+{% block foot %}
+{% endblock %}

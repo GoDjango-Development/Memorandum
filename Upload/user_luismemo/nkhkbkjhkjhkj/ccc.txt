@@ -1,0 +1,4 @@
+Param( [string]$Action )
+$SvcTxtPath = ??
+#echo $Action if($Action.Equals(?start?)){ ?Inicio de servicios? Get-Content $SvcTxtPath | Start-Service ?Servicios Iniciados? } elseif($Action.Equals(?stop?)){ ?Detencion de servicios? [int]$lineCount = (Get-Content $SvcTxtPath ).Count #echo $lineCount $Services = Get-Content $SvcTxtPath #echo $Services[1] for([int]$i=$lineCount-1; $i -ge 0;$i?){
+?Stop Service: $Services[$i]? Stop-Service -Force -Name $Services[$i] } ?Servicios Detenidos? } else {?Error?}

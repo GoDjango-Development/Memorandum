@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import memorandus,add_memorandus,UpdateMemo,DeleteMemo,DetailMemo,invitar_lector,invitar,DeleteArchivo,memo_arch,UpdateArchivo,DeleteInvitado,invitaciones
+from .views import memorandus,add_memorandus,UpdateMemo,DeleteMemo,DetailMemo,invitar_lector,invitar,DeleteArchivo,memo_arch,UpdateArchivo,DeleteInvitado,invitaciones,add_arch_memo
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,6 +25,7 @@ urlpatterns = [
    path('misinvitaciones',invitaciones,name="list_invitaciones"),
    path('memorandum_archivos/<str:nombre>',memo_arch,name="list_memorandums_archivos"),
    path('add_memo',add_memorandus,name="add_memorandums"),
+   path('add_archivos/<int:pk>',add_arch_memo,name="add_archivos"),
    path('update_memo/<int:pk>',UpdateMemo.as_view(),name="update_memorandums"),
    path('update_archivo/<int:pk>',UpdateArchivo.as_view(),name="update_archivo"),
    path('delete_memo/<int:pk>',DeleteMemo.as_view(),name="delete_memorandums"),
