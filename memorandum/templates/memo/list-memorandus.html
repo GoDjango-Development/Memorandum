@@ -4,7 +4,8 @@
     {%block head%}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Memorandums</title>
+    <link rel="shortcut icon" href="{% static 'dist/img/memo-icon.png' %}">
+    <title>Memorandum</title>
     <!-- Tell the browser to be responsive to screen width -->
     <script src="{% static 'js/jquery.min.js'%}"></script>
 
@@ -127,17 +128,17 @@ https://templatemo.com/tm-553-xtra-blog
                     <div class="pagination">
                         <span class="step-links">
                             {% if page_obj.has_previous %}
-                                <a href="?page=1">&laquo; primera</a>
-                                <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+                                <a class="btn btn-success" href="?page=1">&laquo; primera</a>
+                                <a class="btn btn-info" href="?page={{ page_obj.previous_page_number }}">anterior</a>
                             {% endif %}
                             
                             <span class="current">
-                                Página {{ page_obj.number }} de{{ page_obj.paginator.num_pages }}.
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
                             </span>
                     
                             {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
-                                <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+                                <a class="btn btn-info" href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                                <a class="btn btn-success" href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
                             {% endif %}
                         </span>
                     </div>

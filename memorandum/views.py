@@ -22,10 +22,9 @@ User=get_user_model()
 def memorandus(request):
     if request.user.is_authenticated:  
         empresa = Empresa.objects.first()
-        memo = Menorandum.objects.filter(user=request.user)
+        memo = Menorandum.objects.filter(user=request.user).order_by('created_at')
         filter=MemoFilter(request.GET,queryset=memo)
-        memo=filter.qs      
-       
+        memo=filter.qs       
         paginator = Paginator(memo, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
