@@ -146,7 +146,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT='/home/luisyariel/Memo/home/static'
+#STATIC_ROOT='/home/luisyariel/Memo/home/static'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MESSAGE_TAGS={
     err_msg.DEBUG:'debug',
